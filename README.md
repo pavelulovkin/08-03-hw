@@ -30,8 +30,8 @@
 В качестве ответа в репозиторий шаблона с решением добавьте скриншоты с настройками раннера в проекте.
 ### Решение 1
 
-![runner](205402.jpg)
-![runner settings](205329.jpg)
+![runner](media/205402.jpg)
+![runner settings](media/205329.jpg)
 
 ---
 ### Задание 2
@@ -73,5 +73,5 @@ build:
     - docker build .
 ```
 
-![success](223346.jpg)
+![success](media/223346.jpg)
 ---
