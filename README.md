@@ -73,7 +73,7 @@ systemctl enable zabbix-agent
 ```
 git add .
 git stage README.MD
-git commit "hw-02"
+git commit
 git push
 ```
 ---
