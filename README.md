@@ -10,6 +10,7 @@
 
 #### Требования к результату
 - [ ] Прикрепите к файлу README.md скриншот systemctl status prometheus, где будет написано: prometheus.service — Prometheus Service Netology Lesson 9.4 — [Ваши ФИО]
+
 ![systemctl status prometheus](./media/Снимок%20экрана%202024-09-13%20130110.jpg)
 ---
 
@@ -24,6 +25,7 @@
 
 #### Требования к результату
 - [ ] Прикрепите к файлу README.md скриншот systemctl status node-exporter, где будет написано: node-exporter.service — Node Exporter Netology Lesson 9.4 — [Ваши ФИО]
+
 ![systemctl status prometheus-node-exporter](./media/Снимок%20экрана%202024-09-13%20130251.jpg)
 ---
 
@@ -39,6 +41,7 @@
 #### Требования к результату
 - [ ] Прикрепите к файлу README.md скриншот конфигурации из интерфейса Prometheus вкладки Status > Configuration
 - [ ] Прикрепите к файлу README.md скриншот из интерфейса Prometheus вкладки Status > Targets, чтобы было видно минимум два эндпоинта
+
 ![Status > Configuration](./media/Снимок%20экрана%202024-09-13%20130419.jpg)
 ![Status > Targets](./media/Снимок%20экрана%202024-09-13%20130358.jpg)
 ---
@@ -58,5 +61,6 @@
 
 ### Задание 5*
 Интегрируйте Grafana и Prometheus.
+
 ![grafana-prometheus](./media/Снимок%20экрана%202024-09-13%20130634.jpg)
 
