@@ -7,8 +7,8 @@
 - На проверку отправьте получившуюся схему в формате pkt и скриншот, где виден процесс настройки маршрутизатора.
 
 ### Решение 1
-[cisco project file](./resources/hsrp_advanced_UlovkinPL.pkt)
-![Настройки](image.png)
+[Файл проекта .PKT](./resources/hsrp_advanced_UlovkinPL.pkt)
+![Настройки](./media/image.png)
 ------
 
 
@@ -78,7 +78,7 @@ vrrp_instance VI_1 {
 	    chk_web_server
 	}
 }
-
+```
 ![status](./media/Снимок%20экрана%202024-09-17%20065653.jpg)
 ![keepalived](./media/Снимок%20экрана%202024-09-17%20065831.jpg)
 ------
