@@ -8,6 +8,7 @@
 
 ### Решение 1
 [Файл проекта .PKT](./resources/hsrp_advanced_UlovkinPL.pkt)
+
 ![Настройки](./media/image.png)
 ------
 
