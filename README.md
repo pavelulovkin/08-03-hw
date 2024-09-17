@@ -41,6 +41,7 @@ fi
 
 exit 0
 ```
+
 ```deb-twin1
 vrrp_script chk_web_server { 
     script "/root/check_web_server.sh"
@@ -60,6 +61,7 @@ vrrp_instance VI_1 {
 	    chk_web_server
 	}
 }
+
 ```deb-twin2
 vrrp_script chk_web_server { 
     script "/root/check_web_server.sh"
@@ -79,6 +81,7 @@ vrrp_instance VI_1 {
 	    chk_web_server
 	}
 }
+
 ```
 ![status](./media/Снимок%20экрана%202024-09-17%20065653.jpg)
 ![keepalived](./media/Снимок%20экрана%202024-09-17%20065831.jpg)
