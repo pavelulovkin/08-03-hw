@@ -61,6 +61,7 @@ vrrp_instance VI_1 {
 	    chk_web_server
 	}
 }
+```
 
 ```deb-twin2
 vrrp_script chk_web_server { 
