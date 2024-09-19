@@ -28,6 +28,24 @@ rsync -a --delete --checksum --exclude '/.*/' ~/ /tmp/backup
 ```
 25 7 * * * ~/backup_daily.sh
 ```
+
+`backup_daily.sh'
+```
+#!/bin/bash
+
+SOURCE=~
+DEST=/tmp/backup
+
+rsync -a --delete --checksum "$SOURCE" "$DEST"
+EXITCODE=$?
+
+if [ $EXITCODE -eq 0 ]; then
+    logger "[BKP_HOME] Daily backup successful: ~/ to /tmp/backup"
+else
+    logger "[BKP_HOME] Daily backup failed with exit code $EXITCODE"
+fi
+```
+
 ![crontab-job-success](./media/Снимок%20экрана%202024-09-18%20203129.jpg)
 ![crontab-result](./media/Снимок%20экрана%202024-09-18%20203256.jpg)
 ---
