@@ -29,7 +29,7 @@ rsync -a --delete --checksum --exclude '/.*/' ~/ /tmp/backup
 25 7 * * * ~/backup_daily.sh
 ```
 
-`backup_daily.sh'
+`backup_daily.sh`
 ```
 #!/bin/bash
 
