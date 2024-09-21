@@ -111,7 +111,40 @@ output "vm_IPs" {
     for name, vm in yandex_compute_instance.vm : name => vm.network_interface.0.ip_address
   })
 }
+```
+</details>
 
+<details>
+<summary>variables.tf (Развернуть)</summary>
+
+```
+variable "yandex_cloud_token" {
+  description = "Token for Yandex Cloud"
+  type = string
+  default = "y0_XXXXXXXXX"
+}
+```
+</details>
+
+<details>
+<summary>meta.txt (Развернуть)</summary>
+
+```
+#cloud-config
+users:
+  - name: ladmin
+    groups: sudo
+    shell: /bin/bash
+    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+    ssh-authorized-keys:
+        - ssh-rsa XXXXXXXXX root@deb-terraform
+
+packages:
+  - nginx
+
+runcmd:
+  - systemctl start nginx
+  - systemctl enable nginx
 ```
 </details>
 
