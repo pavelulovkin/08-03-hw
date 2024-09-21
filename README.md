@@ -22,10 +22,9 @@
 
 ## Решение 1
 
-`main.tf`
-
 <details>
-<summary>main.tf</summary>
+<summary>main.tf (Развернуть)</summary>
+
 ```
 terraform {
   required_providers {
@@ -112,6 +111,7 @@ output "vm_IPs" {
     for name, vm in yandex_compute_instance.vm : name => vm.network_interface.0.ip_address
   })
 }
+
 ```
 </details>
 
