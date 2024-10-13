@@ -90,6 +90,7 @@ $ rabbitmqadmin get queue='hello'
 
 
 `Одна нода оффлайн`
+
 ![rab1-offline](./media/Снимок%20экрана%202024-10-13%20150534.jpg)
 ![script-to-rab2](./media/Снимок%20экрана%202024-10-13%20150521.jpg)
 ---
