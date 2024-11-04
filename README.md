@@ -1,77 +1,107 @@
-# Домашнее задание к занятию «SQL. Часть 1»
+# Домашнее задание к занятию «SQL. Часть 2»
 
 ### Задание 1
-Получите уникальные названия районов из таблицы с адресами, которые начинаются на “K” и заканчиваются на “a” и не содержат пробелов.
+Одним запросом получите информацию о магазине, в котором обслуживается более 300 покупателей, и выведите в результат следующую информацию: 
+- фамилия и имя сотрудника из этого магазина;
+- город нахождения магазина;
+- количество пользователей, закреплённых в этом магазине.
 
 ### Решение 1
 
 ```mysql
-SELECT DISTINCT district
-FROM address
-WHERE district LIKE 'K%a'
-AND district NOT LIKE '% %';
+SELECT 
+    CONCAT(st.first_name, ' ', st.last_name) AS employee,
+    c.city AS store_city,
+    COUNT(cu.customer_id) AS customer_count
+FROM 
+    store s
+JOIN 
+    staff st ON s.store_id = st.store_id
+JOIN 
+    customer cu ON s.store_id = cu.store_id
+JOIN 
+    address a ON s.address_id = a.address_id
+JOIN 
+    city c ON a.city_id = c.city_id
+GROUP BY 
+    s.store_id, c.city, st.staff_id
+HAVING 
+    COUNT(cu.customer_id) > 300;
 ```
-![districts](./media/Снимок%20экрана%202024-11-04%20182020.jpg)
+![customers](./media/Снимок%20экрана%202024-11-04%20205753.jpg)
 
 ### Задание 2
-Получите из таблицы платежей за прокат фильмов информацию по платежам, которые выполнялись в промежуток с 15 июня 2005 года по 18 июня 2005 года **включительно** и стоимость которых превышает 10.00.
+Получите количество фильмов, продолжительность которых больше средней продолжительности всех фильмов.
 
 ### Решение 2
 
 ```mysql
-SELECT *
-FROM payment
-WHERE payment_date BETWEEN '2005-06-15 00:00:00' AND '2005-06-18 23:59:59'
-  AND amount > 10
-ORDER BY payment_date;
+SELECT COUNT(*) AS count_of_movies
+FROM film
+WHERE length > (SELECT AVG(length) FROM film);
 ```
-
-![payments](./media/Снимок%20экрана%202024-11-04%20182728.jpg)
+![count-of-movies](./media/Снимок%20экрана%202024-11-04%20205937.jpg)
 
 ### Задание 3
-Получите последние пять аренд фильмов.
+Получите информацию, за какой месяц была получена наибольшая сумма платежей, и добавьте информацию по количеству аренд за этот месяц.
 
-### Решение 3
-
-```mysql
-SELECT *
-FROM rental
-ORDER BY rental_date ASC
-LIMIT 5;
-```
-![rentals](./media/Снимок%20экрана%202024-11-04%20183015.jpg)
-
-### Задание 4
-Одним запросом получите активных покупателей, имена которых Kelly или Willie. 
-Сформируйте вывод в результат таким образом:
-- все буквы в фамилии и имени из верхнего регистра переведите в нижний регистр,
-- замените буквы 'll' в именах на 'pp'.
+# Решение 3
 
 ```mysql
 SELECT 
-    REPLACE(LOWER(first_name), 'll', 'pp') AS first_name,
-    LOWER(last_name) AS last_name
+    DATE_FORMAT(p.payment_date, '%m-%Y') AS month,
+    SUM(p.amount) AS total_payments,
+    COUNT(r.rental_id) AS rentals
 FROM 
-    customer
-WHERE 
-    active = 1 AND (first_name = 'kelly' OR first_name = 'willie');
+    payment p
+JOIN 
+    rental r ON p.rental_id = r.rental_id
+GROUP BY 
+    month
+ORDER BY 
+    total_payments DESC
+LIMIT 1;
+
 ```
-![customers](./media/Снимок%20экрана%202024-11-04%20184821.jpg)
+![most-profitable-month](./media/Снимок%20экрана%202024-11-04%20210334.jpg)
 
 ## Дополнительные задания (со звёздочкой*)
 Эти задания дополнительные, то есть не обязательные к выполнению, и никак не повлияют на получение вами зачёта по этому домашнему заданию. Вы можете их выполнить, если хотите глубже шире разобраться в материале.
 
-### Задание 5*
-Выведите Email каждого покупателя, разделив значение Email на две отдельных колонки: в первой колонке должно быть значение, указанное до @, во второй — значение, указанное после @.
-### Задание 6*
-Доработайте запрос из предыдущего задания, скорректируйте значения в новых колонках: первая буква должна быть заглавной, остальные — строчными.
+### Задание 4*
+Посчитайте количество продаж, выполненных каждым продавцом. Добавьте вычисляемую колонку «Премия». Если количество продаж превышает 8000, то значение в колонке будет «Да», иначе должно быть значение «Нет».
 
-### Решение 5+6
+### Решение 4
 
 ```mysql
 SELECT 
-    CONCAT(UPPER(LEFT(SUBSTRING_INDEX(email, '@', 1), 1)), LOWER(SUBSTRING(SUBSTRING_INDEX(email, '@', 1), 2))) AS part_one,
-    CONCAT(UPPER(LEFT(SUBSTRING_INDEX(email, '@', -1), 1)), LOWER(SUBSTRING(SUBSTRING_INDEX(email, '@', -1), 2))) AS part_two
+    staff_id,
+    COUNT(payment_id) AS total_sales,
+    CASE 
+        WHEN COUNT(payment_id) > 8000 THEN 'Да'
+        ELSE 'Нет'
+    END AS Премия
 FROM 
-    customer;
+    payment
+GROUP BY 
+    staff_id;
 ```
+![top-salesman](./media/Снимок%20экрана%202024-11-04%20210839.jpg)
+
+### Задание 5*
+Найдите фильмы, которые ни разу не брали в аренду.
+
+```mysql
+SELECT 
+    f.film_id, 
+    f.title
+FROM 
+    film f
+WHERE 
+    f.film_id NOT IN (
+        SELECT i.film_id
+        FROM inventory i
+        JOIN rental r ON i.inventory_id = r.inventory_id
+    );
+```
+![no-one-wants](./media/Снимок%20экрана%202024-11-04%20211430.jpg)
