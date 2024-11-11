@@ -68,3 +68,22 @@ GROUP BY c.customer_id, c.last_name, c.first_name;
 - Использование JOIN
 - Использование GROUP BY вместо distinct - избегание создания временной таблицы и суммирования с помощью SUM
 - так же можно создать индексы id и дат.
+
+
+![query-result](./media/Снимок%20экрана%202024-11-11%20224038.jpg)
+
+```
+-> Table scan on <temporary>  (actual time=7.7..7.73 rows=391 loops=1)
+    -> Aggregate using temporary table  (actual time=7.69..7.69 rows=391 loops=1)
+        -> Nested loop inner join  (cost=25059 rows=16703) (actual time=0.306..7.04 rows=642 loops=1)
+            -> Nested loop inner join  (cost=19213 rows=16703) (actual time=0.3..6.36 rows=642 loops=1)
+                -> Nested loop inner join  (cost=13367 rows=16703) (actual time=0.295..5.64 rows=642 loops=1)
+                    -> Nested loop inner join  (cost=7520 rows=16703) (actual time=0.286..5.01 rows=642 loops=1)
+                        -> Filter: (cast(p.payment_date as date) = '2005-07-30')  (cost=1674 rows=16500) (actual time=0.265..3.51 rows=634 loops=1)
+                            -> Table scan on p  (cost=1674 rows=16500) (actual time=0.249..2.65 rows=16044 loops=1)
+                        -> Index lookup on r using idx_rental_date (rental_date = p.payment_date)  (cost=0.253 rows=1.01) (actual time=0.00185..0.00224 rows=1.01 loops=634)
+                    -> Single-row index lookup on c using PRIMARY (customer_id = r.customer_id)  (cost=0.25 rows=1) (actual time=667e-6..685e-6 rows=1 loops=642)
+                -> Single-row index lookup on i using PRIMARY (inventory_id = r.inventory_id)  (cost=0.25 rows=1) (actual time=970e-6..0.001 rows=1 loops=642)
+            -> Single-row covering index lookup on f using PRIMARY (film_id = i.film_id)  (cost=0.25 rows=1) (actual time=922e-6..941e-6 rows=1 loops=642)
+
+```
