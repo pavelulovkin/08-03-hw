@@ -32,9 +32,12 @@
     - rlogin (Remote Login)
     - bindshell (порт 1524)
 - Какие уязвимости были вами обнаружены?
-    - [https://www.exploit-db.com/exploits/49757](vsftpd 2.3.4 - Backdoor Command Execution)
-    - [https://www.exploit-db.com/exploits/16320](Samba 3.0.20 < 3.0.25rc3 - 'Username' map script' Command Execution Metasploit)
-    - [https://www.exploit-db.com/exploits/19092](MySQL - Authentication Bypass)
+    - https://www.exploit-db.com/exploits/49757
+      vsftpd 2.3.4 - Backdoor Command Execution
+    - https://www.exploit-db.com/exploits/16320
+      Samba 3.0.20 < 3.0.25rc3 - 'Username' map script' Command Execution Metasploit
+    - https://www.exploit-db.com/exploits/19092
+      MySQL Authentication Bypass
 
 ### Задание 2
 Проведите сканирование Metasploitable в режимах SYN, FIN, Xmas, UDP.
